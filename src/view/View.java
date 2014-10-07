@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class View extends JFrame
+import observer.IObserver;
+
+public class View extends JFrame implements IObserver
 {
 	private static final String IMAGE_PATH = "./IMAGES/Connect4/";
 
@@ -144,6 +146,12 @@ public class View extends JFrame
 		// test
 		View view = new View();
 		view.initBoard(6, 7);
+	}
+
+	@Override
+	public void Update(String path) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

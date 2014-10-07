@@ -1,6 +1,8 @@
 package model;
 
-public class GameModel 
+import observer.Subject;
+
+public class GameModel extends Subject
 {
 
 }
