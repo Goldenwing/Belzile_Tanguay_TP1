@@ -1,4 +1,4 @@
-package cours420_520.ui;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

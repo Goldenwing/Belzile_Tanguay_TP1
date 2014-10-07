@@ -1,4 +1,4 @@
-package cours420_520.ui;
+package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
