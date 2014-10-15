@@ -128,7 +128,7 @@ public class View extends JFrame implements IObserver
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-			System.out.println("Action on menu");
+			endGameWindow("Defeat");
 		}
 	}
 
@@ -141,6 +141,10 @@ public class View extends JFrame implements IObserver
 		}
 	}
 
+	public void endGameWindow(String condition)
+	{
+		EndGame end = new EndGame(condition);
+	}
 	public static void main(String[] args)
 	{
 		// test
