@@ -106,6 +106,13 @@ public class View extends JFrame implements IObserver
 		setSize(((screenSize.width * 3) / 6), ((screenSize.height * 4) / 7));
 		setLocation(((screenSize.width - getWidth()) / 2), ((screenSize.height - getHeight()) / 2));
 	}
+	
+	@Override
+	public void Update(String path) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 	private class ButtonHandler implements ActionListener
 	{
@@ -143,19 +150,64 @@ public class View extends JFrame implements IObserver
 
 	public void endGameWindow(String condition)
 	{
-		EndGame end = new EndGame(condition);
+		String endText = "";
+		switch(condition)
+		{
+			case "Victory":
+			{
+				endText = victoryText();
+				break;
+			}
+			
+			case "Defeat":
+			{
+				endText = defeatText();
+				break;
+			}
+			
+			case "Tie":
+			{
+				endText = tieText();
+				break;
+			}
+		}
+		
+		int userInput = JOptionPane.showConfirmDialog(null, endText, "Game Over", JOptionPane.YES_NO_OPTION);
+		
+		if (userInput == JOptionPane.YES_OPTION)
+        {
+            this.initBoard(6, 7);
+        }
+		else
+		{
+			System.exit(0);
+		}
 	}
+	
+	private String victoryText()
+	{
+		return "Victoire! vous avez réussi! Félicitations, champion! \n" +
+				"Voulez-vous rejouer?";
+	}
+	
+	private String defeatText()
+	{
+		return "Oh... c'est la défaite. Meilleure chance la prochaine fois, mon ami.\n" +
+				"Voulez-vous rejouer?";
+	}
+	
+	private String tieText()
+	{
+		return "Égalité! Le tableau est plein! Refaites le combat pour gagner! \n" +
+				"Voulez-vous rejouer?";
+
+	}
+	
 	public static void main(String[] args)
 	{
 		// test
 		View view = new View();
 		view.initBoard(6, 7);
-	}
-
-	@Override
-	public void Update(String path) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
