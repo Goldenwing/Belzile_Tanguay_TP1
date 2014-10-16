@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -16,6 +17,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import model.PlayedToken;
+
+import controller.GameController;
 
 import observer.IObserver;
 
@@ -29,15 +34,18 @@ public class View extends JFrame implements IObserver
 
 	private MyImageContainer[][] placeHolders;
 
+	private GameController gameController;
+	
 	private final JTextField message = new JTextField(20);
 	private final JPanel centerPane = new JPanel();
 
 	private View()
 	{
 		this.setTitle("Connect4");
+		this.gameController = new GameController();
 
 		this.configureWindow();
-
+		
 		this.setLayout(new BorderLayout());
 		JPanel panelNorth = new JPanel();
 		panelNorth.setLayout(new FlowLayout());
@@ -108,10 +116,18 @@ public class View extends JFrame implements IObserver
 	}
 	
 	@Override
-	public void Update(String path) 
+	public void Update(String color, int x, int y) 
 	{
-		// TODO Auto-generated method stub
-		
+		String image = "";
+		if(color == "red")
+		{
+			image = "./Images/CONNECT4/Red.jpg"; //path a verifier
+		}
+		else
+		{
+			image = "./Images/CONNECT4/Blue.jpg"; //path a verifier
+		}
+		this.placeHolders[x][y].setImageIcon(new ImageIcon(image));
 	}
 
 	private class ButtonHandler implements ActionListener
@@ -126,6 +142,16 @@ public class View extends JFrame implements IObserver
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
+			if(gameController.verifyTokenSpace(columnIndex))
+			{
+				//gameController.addToken(color, x, y)
+			}
+			else
+			{
+				//errorMessage "No space!";
+			}
+			
+			
 			System.out.println("Action on button: " + columnIndex);
 		}
 	}

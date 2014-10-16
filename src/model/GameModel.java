@@ -14,6 +14,7 @@ public class GameModel extends Subject
 	public void add(PlayedToken token)
 	{
 		
+		//Notify(token);
 	}
 	
 	public int getNbTokens()
