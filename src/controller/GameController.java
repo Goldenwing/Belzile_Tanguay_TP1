@@ -6,20 +6,26 @@ import model.PlayedToken;
 public class GameController 
 {
 	Connect4Stack[] modelStackArray;
-	public GameController()
+	
+	public GameController(int nbColumns, int nbRows)
 	{
-		this.modelStackArray = new Connect4Stack[7];
+		this.modelStackArray = new Connect4Stack[nbColumns];
+		
+		for(int i = 0; i < nbColumns; i++)
+		{
+			this.modelStackArray[i] = new Connect4Stack(nbRows);
+		}
 	}
 	
 	public boolean verifyTokenSpace(int columnIndex)
 	{
-		return this.modelStackArray[columnIndex -1].isFull();
+		return this.modelStackArray[columnIndex].isFull();
 	}
 	
 	public void addToken(String color, int columnIndex, int columnPosition)
 	{
 		PlayedToken newToken = new PlayedToken(color, columnIndex, columnPosition);
-		this.modelStackArray[columnIndex - 1].push(newToken);
+		this.modelStackArray[columnIndex].push(newToken);
 		
 		if(Connect4Stack.getNbTokens() >= 7)
 		{
