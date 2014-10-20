@@ -1,7 +1,8 @@
 package model;
+import observer.Subject;
 import model.PlayedToken;
 
-public class Connect4Stack 
+public class Connect4Stack extends Subject
 {
 	private static int nbTokens;
 	private int stackSize;
