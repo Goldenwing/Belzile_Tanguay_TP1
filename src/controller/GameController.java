@@ -1,18 +1,24 @@
 package controller;
 
+import view.View;
 import model.Connect4Stack;
 import model.PlayedToken;
 
 public class GameController 
 {
 	Connect4Stack[] modelStackArray;
-	public GameController(int nbColumns, int nbRows)
+	View view;
+	
+	public GameController(int nbColumns, int nbRows, View view)
 	{
+		this.view = view;
+		
 		this.modelStackArray = new Connect4Stack[nbColumns];
 		
 		for(int i = 0; i < nbColumns; i++)
 		{
 			this.modelStackArray[i] = new Connect4Stack(nbRows);
+			this.modelStackArray[i].attach(this.view);
 		}
 	}
 	
@@ -21,20 +27,36 @@ public class GameController
 		return this.modelStackArray[columnIndex].isFull();
 	}
 	
-	public void addToken(String color, int columnIndex, int columnPosition)
+	public void addToken(int columnIndex)
 	{
-		PlayedToken newToken = new PlayedToken(color, columnIndex, columnPosition);
+		int columnPosition = this.modelStackArray[columnIndex].getNumberStackElements();
+	
+		PlayedToken newToken = new PlayedToken(columnIndex, columnPosition);
 		this.modelStackArray[columnIndex].push(newToken);
 		
 		if(Connect4Stack.getNbTokens() >= 7)
 		{
 			checkVictory(newToken);
 		}
-		//apres, le model devrait verifier si on a gagner. Ce soir je vais faire l'algo pour verifier.
+		
 	}
 	
 	private boolean checkVictory(PlayedToken lastToken)
 	{
+		boolean victoryAchieved = false;
+		boolean checkedAllDirections = false;
+		
+		while(victoryAchieved = false || checkedAllDirections == false)
+		{
+			
+		}
+		//victoryAchieved = checkDown(columnIndex, columnPosition+1);
+		//victoryAchieved = checkLeft(columnIndex -1, columnPosition);
+		//victoryAchieved = checkRight(columnIndex +1, columnPosition);
+		//victoryAchieved = checkUpLeft(columnIndex-1, columnPosition -1);
+		//victoryAchieved = checkUpRight(columnIndex+1, columnPosition -1);
+		//victoryAchieved = checkDownLeft(columnIndex-1, columnPosition + 1);
+		//victoryAchieved = checkDownRight(columnIndex +1, column Position +1);
 		return true;
 	}
 }

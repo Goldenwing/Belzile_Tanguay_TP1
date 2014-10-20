@@ -16,10 +16,10 @@ public class ControllerTests
 	}
 	
 	@Test
-	public void TestGridPaneAddToken()
+	public void TestStackAddToken()
 	{
 		Connect4Stack stackTest = new Connect4Stack(6);
-		PlayedToken tokenTest = new PlayedToken("red", 5, 2);
+		PlayedToken tokenTest = new PlayedToken(5, 2);
 		
 		stackTest.push(tokenTest);
 		

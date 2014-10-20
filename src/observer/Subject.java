@@ -12,21 +12,18 @@ public abstract class Subject
 {
 	List<IObserver> observers = new ArrayList<IObserver>();
 	
-	public void Attach(IObserver view)
+	public void attach(IObserver view)
 	{
 		observers.add(view);
 	}
 	
-	public void Detatch(View view)
+	public void detatch(View view)
 	{
 		observers.remove(view);
 	}
 	
-	public void Notify(PlayedToken token)
+	public void notify(PlayedToken token)
 	{
-		for(int i = 0; i < observers.size(); i++)
-		{
-			observers.get(i).Update(token.getColor(), token.getColumnIndex(), token.getColumnPosition());
-		}
+		observers.get(0).Update(token.getColor(), token.getColumnIndex(), token.getColumnPosition());
 	}
 }

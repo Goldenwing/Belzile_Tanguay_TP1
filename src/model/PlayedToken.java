@@ -4,14 +4,26 @@ public class PlayedToken
 {
 	private int columnIndex;
 	private int columnPosition;
+	private String tokenColorPath;
 	
-	private String color;
+	private static String colorPicker;
 	
-	public PlayedToken(String color, int columnIndex, int columnPosition)
+	public PlayedToken(int columnIndex, int columnPosition)
 	{
-		this.color = color;
 		this.columnIndex = columnIndex;
 		this.columnPosition = columnPosition;
+		
+		if(PlayedToken.colorPicker == "red")
+		{
+			this.tokenColorPath = "./images/Blue.png";
+			
+			PlayedToken.colorPicker = "blue";
+		}
+		else
+		{
+			this.tokenColorPath = "./images/Red.png";
+			PlayedToken.colorPicker = "red";
+		}
 	}
 
 	public int getColumnIndex() 
@@ -36,12 +48,12 @@ public class PlayedToken
 
 	public String getColor() 
 	{
-		return color;
+		return tokenColorPath;
 	}
 
 	public void setColor(String color) 
 	{
-		this.color = color;
+		this.tokenColorPath = color;
 	}
 	
 }

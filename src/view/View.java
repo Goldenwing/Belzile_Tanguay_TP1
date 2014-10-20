@@ -26,8 +26,6 @@ import observer.IObserver;
 
 public class View extends JFrame implements IObserver
 {
-	private static final String IMAGE_PATH = "./IMAGES/Connect4/";
-
 	private static final long serialVersionUID = 1L;
 
 	private JButton[] controlButtons;
@@ -42,7 +40,6 @@ public class View extends JFrame implements IObserver
 	private View()
 	{
 		this.setTitle("Connect4");
-		
 
 		this.configureWindow();
 		
@@ -77,7 +74,7 @@ public class View extends JFrame implements IObserver
 
 	private void initBoard(int nbRows, int nbColumns)
 	{
-		this.gameController = new GameController(nbColumns, nbRows);
+		this.gameController = new GameController(nbColumns, nbRows, this);
 		this.centerPane.removeAll();
 		this.placeHolders = new MyImageContainer[nbRows][nbColumns];
 		this.controlButtons = new JButton[nbColumns];
@@ -117,18 +114,18 @@ public class View extends JFrame implements IObserver
 	}
 	
 	@Override
-	public void Update(String color, int columnIndex, int columnPosition) 
+	public void Update(String colorPath, int columnIndex, int columnPosition) 
 	{
-		String image = "";
-		if(color == "red")
+		if(colorPath.contains("Red"))
 		{
-			image = "./Images/CONNECT4/Red.jpg"; //path a verifier
+			View.this.message.setText("C'est au tour du joueur bleu!");
 		}
 		else
 		{
-			image = "./Images/CONNECT4/Blue.jpg"; //path a verifier
+			View.this.message.setText("C'est au tour du joueur rouge!");
 		}
-		this.placeHolders[columnIndex][columnPosition].setImageIcon(new ImageIcon(image));
+		
+		this.placeHolders[columnPosition][columnIndex].setImageIcon(new ImageIcon(colorPath));
 	}
 
 	private class ButtonHandler implements ActionListener
@@ -143,17 +140,14 @@ public class View extends JFrame implements IObserver
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-			if(gameController.verifyTokenSpace(columnIndex))
+			if(!gameController.verifyTokenSpace(columnIndex))
 			{
-				//gameController.addToken(color, columnIndex)
+				gameController.addToken(columnIndex);
 			}
 			else
 			{
-				//errorMessage "No space!";
+				View.this.message.setText("Cette rangee est pleine!"); 
 			}
-			
-			
-			System.out.println("Action on button: " + columnIndex);
 		}
 	}
 

@@ -21,15 +21,15 @@ public class Connect4StackTests {
 	
 	@Test
 	public void pushElementToNonFullStackMustReturnTrue() {
-		PlayedToken token = new PlayedToken("rouge",0,0);
+		PlayedToken token = new PlayedToken(0,0);
 		Connect4Stack stack = new Connect4Stack(2);
 		Assert.assertTrue(stack.push(token));
 	}
 	
 	@Test
 	public void pushElementToFullStackMustReturnFalse() {
-		PlayedToken token = new PlayedToken("rouge",0,0);
-		PlayedToken token2 = new PlayedToken("bleu",1,1);
+		PlayedToken token = new PlayedToken(0,0);
+		PlayedToken token2 = new PlayedToken(1,1);
 		Connect4Stack stack = new Connect4Stack(1);
 		stack.push(token);
 		Assert.assertFalse(stack.push(token2));
@@ -39,9 +39,9 @@ public class Connect4StackTests {
 	public void peekAtElementAtSpecifiedPositionMustReturnGoodElement() {
 		Connect4Stack stack = new Connect4Stack(3);
 		PlayedToken peekedElement = null;
-		PlayedToken token = new PlayedToken("rouge",0,0);
-		PlayedToken token2 = new PlayedToken("bleu",1,1);
-		PlayedToken token3 = new PlayedToken("vert",2,2);
+		PlayedToken token = new PlayedToken(0,0);
+		PlayedToken token2 = new PlayedToken(1,1);
+		PlayedToken token3 = new PlayedToken(2,2);
 		stack.push(token);
 		stack.push(token2);
 		stack.push(token3);
@@ -55,9 +55,9 @@ public class Connect4StackTests {
 	public void peekAtElementAtNonExistantPositionMustReturnNull() {
 		Connect4Stack stack = new Connect4Stack(3);
 		PlayedToken peekedElement = null;
-		PlayedToken token = new PlayedToken("rouge",0,0);
-		PlayedToken token2 = new PlayedToken("bleu",1,1);
-		PlayedToken token3 = new PlayedToken("vert",2,2);
+		PlayedToken token = new PlayedToken(0,0);
+		PlayedToken token2 = new PlayedToken(1,1);
+		PlayedToken token3 = new PlayedToken(2,2);
 		stack.push(token);
 		stack.push(token2);
 		stack.push(token3);

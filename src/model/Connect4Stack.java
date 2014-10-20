@@ -34,6 +34,7 @@ public class Connect4Stack extends Subject
 			this.stackSize++;
 			Connect4Stack.nbTokens++;
 			
+			this.notify(this.currentNode.element);
 			return true;
 		}
 		return false;
@@ -80,6 +81,7 @@ public class Connect4Stack extends Subject
 		}
 		return peekedElement;
 	}
+
 	
 //////////////////////////////////////////////////////////////////////	
 	private class Node<T> 
