@@ -3,6 +3,8 @@ package observer;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.PlayedToken;
+
 import observer.IObserver;
 import view.View;
 
@@ -20,11 +22,11 @@ public abstract class Subject
 		observers.remove(view);
 	}
 	
-	public void Notify(String path)
+	public void Notify(PlayedToken token)
 	{
 		for(int i = 0; i < observers.size(); i++)
 		{
-			observers.get(i).Update(path);
+			observers.get(i).Update(token.getColor(), token.getColumnIndex(), token.getColumnPosition());
 		}
 	}
 }
