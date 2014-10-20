@@ -46,7 +46,7 @@ public class Connect4StackTests {
 		stack.push(token2);
 		stack.push(token3);
 		
-		peekedElement = stack.PeekAt(2);
+		peekedElement = stack.peekAt(2);
 		Assert.assertEquals(token2, peekedElement);
 		
 	}
@@ -62,7 +62,7 @@ public class Connect4StackTests {
 		stack.push(token2);
 		stack.push(token3);
 		
-		peekedElement = stack.PeekAt(6);
+		peekedElement = stack.peekAt(6);
 		Assert.assertEquals(null, peekedElement);
 	}
 	
