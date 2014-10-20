@@ -79,7 +79,7 @@ public class Connect4Stack extends Subject
 		
 		PlayedToken peekedElement = null;
 		Node<PlayedToken> readerNode = this.currentNode;
-		for (int i = 1; i <= position; i++) 
+		for (int i = this.currentNode.getElement().getColumnPosition(); i > -1; i--) 
 		{
 			if (readerNode != null) 
 			{

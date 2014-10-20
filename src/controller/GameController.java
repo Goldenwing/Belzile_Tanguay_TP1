@@ -54,11 +54,11 @@ public class GameController
 	
 	private boolean checkVictory(PlayedToken lastToken)
 	{
-		int counter = 0;
+		int counter = 1;
 		
 		boolean victoryAchieved = false;
 		
-		while(victoryAchieved = false)
+		while(victoryAchieved == false)
 		{
 			switch(counter)
 			{
@@ -91,6 +91,7 @@ public class GameController
 	
 	private boolean checkHorizontal(PlayedToken token)
 	{
+		int goodTokensMax = this.view.getNbrSucessiveTokensToWin();
 		int goodTokens = 1;
 		String goodColor = "";
 		if(token.getColor().contains("Red"))
@@ -102,19 +103,45 @@ public class GameController
 		
 		if(token.getColumnIndex() != 0)
 		{
-			for(int i = 0; i < 3; i++)
+			for(int i = 0; i < token.getColumnIndex(); i++)
 			{
 				if(this.modelStackArray[token.getColumnIndex() - i].peekAt(token.getColumnPosition()).getColor().contains(goodColor))
 				{
-					goodTokens++;
+					if(goodTokens == goodTokensMax)
+					{
+						break;
+					}
+					else
+						goodTokens++;
 				}
 				else
 					break;
 			}
 		}
-		//victoryAchieved = checkLeft(columnIndex -1, columnPosition);
-		//victoryAchieved = checkRight(columnIndex +1, columnPosition);
-		return false;
+		
+		if(goodTokens < goodTokensMax)
+		{
+			if(token.getColumnIndex() < this.view.getNbrColumns())
+			for(int i = 0; i < (goodTokensMax - goodTokens); i++)
+			{
+				if(this.modelStackArray[token.getColumnIndex() + i].peekAt(token.getColumnPosition()).getColor().contains(goodColor))
+				{
+					if(goodTokens == goodTokensMax)
+					{
+						break;
+					}
+					else
+						goodTokens++;
+				}
+				else
+					break;
+			}
+		}
+		
+		if(goodTokens == 4)
+			return true;
+		else
+			return false;
 	}
 	
 	private boolean checkVertical(PlayedToken token)

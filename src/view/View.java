@@ -240,6 +240,18 @@ public class View extends JFrame implements IObserver
 		this.nbrSucessiveTokensToWin = nbrSucessiveTokens;
 	}
 	
+	public int getNbrSucessiveTokensToWin() {
+		return nbrSucessiveTokensToWin;
+	}
+	
+	public int getNbrColumns(){
+		return this.nbrColumns;
+	}
+	
+	public int getNbrRows(){
+		return this.nbrRows;
+	}
+	
 	public static void main(String[] args)
 	{
 		JUnitCore junit = new JUnitCore();
