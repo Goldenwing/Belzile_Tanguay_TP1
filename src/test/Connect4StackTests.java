@@ -23,7 +23,7 @@ public class Connect4StackTests {
 	public void pushElementToNonFullStackMustReturnTrue() {
 		PlayedToken token = new PlayedToken(0,0);
 		Connect4Stack stack = new Connect4Stack(2);
-		Assert.assertTrue(stack.push(token));
+		Assert.assertTrue(stack.pushTest(token));
 	}
 	
 	@Test
@@ -31,7 +31,7 @@ public class Connect4StackTests {
 		PlayedToken token = new PlayedToken(0,0);
 		PlayedToken token2 = new PlayedToken(1,1);
 		Connect4Stack stack = new Connect4Stack(1);
-		stack.push(token);
+		stack.pushTest(token);
 		Assert.assertFalse(stack.push(token2));
 	}
 	
@@ -42,28 +42,27 @@ public class Connect4StackTests {
 		PlayedToken token = new PlayedToken(0,0);
 		PlayedToken token2 = new PlayedToken(1,1);
 		PlayedToken token3 = new PlayedToken(2,2);
-		stack.push(token);
-		stack.push(token2);
-		stack.push(token3);
+		stack.pushTest(token);
+		stack.pushTest(token2);
+		stack.pushTest(token3);
 		
 		peekedElement = stack.peekAt(2);
 		Assert.assertEquals(token2, peekedElement);
 		
 	}
 	
-	@Test
+	@Test (expected = IndexOutOfBoundsException.class)
 	public void peekAtElementAtNonExistantPositionMustReturnNull() {
 		Connect4Stack stack = new Connect4Stack(3);
 		PlayedToken peekedElement = null;
 		PlayedToken token = new PlayedToken(0,0);
 		PlayedToken token2 = new PlayedToken(1,1);
 		PlayedToken token3 = new PlayedToken(2,2);
-		stack.push(token);
-		stack.push(token2);
-		stack.push(token3);
+		stack.pushTest(token);
+		stack.pushTest(token2);
+		stack.pushTest(token3);
 		
 		peekedElement = stack.peekAt(6);
-		Assert.assertEquals(null, peekedElement);
 	}
 	
 }

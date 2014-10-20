@@ -18,11 +18,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
 import model.PlayedToken;
 
 import controller.GameController;
 
 import observer.IObserver;
+import test.Connect4StackTests;
+import test.ControllerTests;
 
 public class View extends JFrame implements IObserver
 {
@@ -36,7 +41,11 @@ public class View extends JFrame implements IObserver
 	
 	private final JTextField message = new JTextField(20);
 	private final JPanel centerPane = new JPanel();
-
+	
+	private int nbrRows;
+	private int nbrColumns;
+	private int nbrSucessiveTokensToWin;
+	
 	private View()
 	{
 		this.setTitle("Connect4");
@@ -72,16 +81,16 @@ public class View extends JFrame implements IObserver
 		this.setJMenuBar(menuBar);
 	}
 
-	private void initBoard(int nbRows, int nbColumns)
+	private void initBoard(int nbRows, int nbColumns, int nbTokensToWin)
 	{
-		this.gameController = new GameController(nbColumns, nbRows, this);
+		this.setGameParameters(nbRows, nbColumns, nbTokensToWin);
 		this.centerPane.removeAll();
-		this.placeHolders = new MyImageContainer[nbRows][nbColumns];
-		this.controlButtons = new JButton[nbColumns];
+		this.placeHolders = new MyImageContainer[this.nbrRows][this.nbrColumns];
+		this.controlButtons = new JButton[this.nbrColumns];
 
-		centerPane.setLayout(new GridLayout(nbRows + 1, nbColumns));
-
-		for (int i = 0; i < nbColumns; i++)
+		centerPane.setLayout(new GridLayout(this.nbrRows + 1, this.nbrColumns));
+		this.gameController = new GameController(this.nbrRows, this.nbrColumns, this);
+		for (int i = 0; i < this.nbrColumns; i++)
 		{
 			JButton button = new JButton("T");
 			this.controlButtons[i] = button;
@@ -89,9 +98,9 @@ public class View extends JFrame implements IObserver
 			centerPane.add(button);
 		}
 
-		for (int row = nbRows - 1; row >= 0; row--)
+		for (int row = this.nbrRows - 1; row >= 0; row--)
 		{
-			for (int column = 0; column < nbColumns; column++)
+			for (int column = 0; column < this.nbrColumns; column++)
 			{
 				MyImageContainer button = new MyImageContainer();
 				button.setOpaque(true);
@@ -197,7 +206,7 @@ public class View extends JFrame implements IObserver
 		
 		if (userInput == JOptionPane.YES_OPTION)
         {
-            this.initBoard(6, 7);
+			this.initBoard(this.nbrRows, this.nbrColumns, this.nbrSucessiveTokensToWin);
         }
 		else
 		{
@@ -224,11 +233,40 @@ public class View extends JFrame implements IObserver
 
 	}
 	
+	void setGameParameters(int rows, int columns, int nbrSucessiveTokens) 
+	{
+		this.nbrRows = rows;
+		this.nbrColumns = columns;
+		this.nbrSucessiveTokensToWin = nbrSucessiveTokens;
+	}
+	
 	public static void main(String[] args)
 	{
-		// test
+		JUnitCore junit = new JUnitCore();
+		Result result1 = junit.run(Connect4StackTests.class);
+		Result result2 = junit.run(ControllerTests.class);
+		if (result1.getFailureCount() != 0 || result2.getFailureCount() != 0) {
+			System.out.println("Erreur dans les tests. Fin du programme.");
+			System.exit(1);
+		}
+		
 		View view = new View();
-		view.initBoard(6, 7);
+		
+		int nbrRows = 0;
+		int nbrColumns = 0;
+		int nbrSucessiveTokensToWin = 0;
+		
+		try {
+			nbrRows = Integer.parseInt(args[0]);
+			nbrColumns = Integer.parseInt(args[1]);
+			nbrSucessiveTokensToWin = Integer.parseInt(args[2]);
+		}
+		catch (NumberFormatException e) {
+	        System.err.println("Un des parametres n'est pas un entier. Fin du programme.");
+	        System.exit(1);
+		}
+		
+		view.initBoard(nbrRows, nbrColumns, nbrSucessiveTokensToWin);
 	}
 
 }

@@ -11,6 +11,7 @@ public class Connect4Stack extends Subject
 	
 	public Connect4Stack(int capacity) 
 	{
+		Connect4Stack.nbTokens = 0;
 		this.stackSize = 0;
 		this.stackCapacity = capacity;
 		this.currentNode = null;
@@ -40,6 +41,19 @@ public class Connect4Stack extends Subject
 		return false;
 	}
 	
+	public boolean pushTest(PlayedToken token) 
+	{
+		if (!this.isFull()) 
+		{
+			Node<PlayedToken> oldNode = this.currentNode;
+			this.currentNode = new Node<PlayedToken>(token, oldNode);
+			this.stackSize++;
+			Connect4Stack.nbTokens++;
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean isFull() 
 	{
 		return (this.stackSize == this.stackCapacity);
@@ -58,6 +72,11 @@ public class Connect4Stack extends Subject
 	
 	public PlayedToken peekAt(int position) 
 	{
+		if(position >= this.stackCapacity)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		
 		PlayedToken peekedElement = null;
 		Node<PlayedToken> readerNode = this.currentNode;
 		for (int i = 1; i <= position; i++) 
