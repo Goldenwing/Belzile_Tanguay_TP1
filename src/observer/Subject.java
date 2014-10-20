@@ -26,7 +26,7 @@ public abstract class Subject
 	{
 		for(int i = 0; i < observers.size(); i++)
 		{
-			observers.get(i).Update(token.getColor(), token.getPositionX(), token.getPositionY());
+			observers.get(i).Update(token.getColor(), token.getColumnIndex(), token.getColumnPosition());
 		}
 	}
 }

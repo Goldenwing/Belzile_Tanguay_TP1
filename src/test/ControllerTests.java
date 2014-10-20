@@ -1,32 +1,29 @@
 package test;
 
-import model.GameModel;
+import model.Connect4Stack;
 import model.PlayedToken;
 
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.*;
 
-import controller.GameController;
-
-public class ControllerTests 
+public class ControllerTests
 {
 	@Test
-	public void TestGridPaneBackendCreation()
+	public void TestStackBackendCreation()
 	{
-		GameModel gridTest = new GameModel();
+		Connect4Stack stackTest = new Connect4Stack(6);
 		
-		Assert.assertNotNull(gridTest);
+		Assert.assertNotNull(stackTest);
 	}
 	
 	@Test
 	public void TestGridPaneAddToken()
 	{
-		GameModel gridTest = new GameModel();
+		Connect4Stack stackTest = new Connect4Stack(6);
 		PlayedToken tokenTest = new PlayedToken("red", 5, 2);
 		
-		gridTest.add(tokenTest);
+		stackTest.push(tokenTest);
 		
-		Assert.assertEquals(1, gridTest.getNbTokens());
+		Assert.assertEquals(1, stackTest.getNumberStackElements());
 		
 	}
 }

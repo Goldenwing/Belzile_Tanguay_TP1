@@ -116,7 +116,7 @@ public class View extends JFrame implements IObserver
 	}
 	
 	@Override
-	public void Update(String color, int x, int y) 
+	public void Update(String color, int columnIndex, int columnPosition) 
 	{
 		String image = "";
 		if(color == "red")
@@ -127,7 +127,7 @@ public class View extends JFrame implements IObserver
 		{
 			image = "./Images/CONNECT4/Blue.jpg"; //path a verifier
 		}
-		this.placeHolders[x][y].setImageIcon(new ImageIcon(image));
+		this.placeHolders[columnIndex][columnPosition].setImageIcon(new ImageIcon(image));
 	}
 
 	private class ButtonHandler implements ActionListener
@@ -144,7 +144,7 @@ public class View extends JFrame implements IObserver
 		{
 			if(gameController.verifyTokenSpace(columnIndex))
 			{
-				//gameController.addToken(color, x, y)
+				//gameController.addToken(color, columnIndex)
 			}
 			else
 			{

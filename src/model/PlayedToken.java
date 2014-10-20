@@ -2,36 +2,36 @@ package model;
 
 public class PlayedToken 
 {
-	private int positionX;
-	private int positionY;
+	private int columnIndex;
+	private int columnPosition;
 	
 	private String color;
 	
-	public PlayedToken(String color, int x, int y)
+	public PlayedToken(String color, int columnIndex, int columnPosition)
 	{
 		this.color = color;
-		this.positionX = x;
-		this.positionY = y;
+		this.columnIndex = columnIndex;
+		this.columnPosition = columnPosition;
 	}
 
-	public int getPositionX() 
+	public int getColumnIndex() 
 	{
-		return positionX;
+		return this.columnIndex;
 	}
 
-	public void setPositionX(int positionX) 
+	public void setColumnIndex(int columnIndex) 
 	{
-		this.positionX = positionX;
+		this.columnIndex = columnIndex;
 	}
-
-	public int getPositionY() 
+	
+	public int getColumnPosition()
 	{
-		return positionY;
+		return this.columnPosition;
 	}
-
-	public void setPositionY(int positionY) 
+	
+	public void setColumnPosition(int columnPosition)
 	{
-		this.positionY = positionY;
+		this.columnPosition = columnPosition;
 	}
 
 	public String getColor() 
