@@ -183,9 +183,15 @@ public class View extends JFrame implements IObserver
 		String endText = "";
 		switch(condition)
 		{
-			case "Victory":
+			case "blueVictory":
 			{
-				endText = victoryText();
+				endText = blueVictoryText();
+				break;
+			}
+			
+			case "redVictory":
+			{
+				endText = redVictoryText();
 				break;
 			}
 			
@@ -214,9 +220,15 @@ public class View extends JFrame implements IObserver
 		}
 	}
 	
-	private String victoryText()
+	private String redVictoryText()
 	{
-		return "Victoire! vous avez réussi! Félicitations, champion! \n" +
+		return "Victoire! Les Rouges ont réussi! Félicitations, champion! \n" +
+				"Voulez-vous rejouer?";
+	}
+	
+	private String blueVictoryText()
+	{
+		return "Victoire! Les Bleus ont réussi! Félicitations, champion! \n" +
 				"Voulez-vous rejouer?";
 	}
 	

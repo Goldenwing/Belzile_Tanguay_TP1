@@ -35,13 +35,14 @@ public class ControllerTests
 		Assert.assertFalse(test.verifyTokenSpace(0));
 	}
 	
-//	@Test
-//	public void TestControllerCheckSpaceWithBadIndex()
-//	{
-//		GameController test = new GameController(5, 2);
-//		
-//		test.verifyTokenSpace(7);
-//	}
+	@Test(expected = IndexOutOfBoundsException.class)
+	public void TestControllerCheckSpaceWithBadIndex()
+	{
+		GameController test = new GameController(5, 2);
+		
+		test.verifyTokenSpace(7);
+	}
+	
 	@Test
 	public void TestStackAddToken()
 	{

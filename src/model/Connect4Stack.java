@@ -69,7 +69,17 @@ public class Connect4Stack extends Subject
 		this.currentNode = null;
 		this.stackSize = 0;
 	}
-	
+	public boolean checkPositionifEmpty(int position)
+	{
+		if (this.peekAt(position) != null) 
+		{
+			return false;
+		}
+		else 
+		{
+			return true;
+		}
+	}
 	public PlayedToken peekAt(int position) 
 	{
 		if(position >= this.stackCapacity)
@@ -79,10 +89,11 @@ public class Connect4Stack extends Subject
 		
 		PlayedToken peekedElement = null;
 		Node<PlayedToken> readerNode = this.currentNode;
-		for (int i = this.currentNode.getElement().getColumnPosition(); i > -1; i--) 
+		if (readerNode != null) 
 		{
-			if (readerNode != null) 
+			for (int i = this.currentNode.getElement().getColumnPosition(); i > -1; i--) 
 			{
+				
 				if (i == position) 
 				{
 					peekedElement = readerNode.getElement();
@@ -93,11 +104,11 @@ public class Connect4Stack extends Subject
 					readerNode = readerNode.getNextNode();
 				}
 			}
-			else
-			{
-				break;
-			}
 		}
+		else
+			return null;
+		
+		
 		return peekedElement;
 	}
 

@@ -41,16 +41,22 @@ public class GameController
 	public void addToken(int columnIndex)
 	{
 		int columnPosition = this.modelStackArray[columnIndex].getNumberStackElements();
-	
+		
 		PlayedToken newToken = new PlayedToken(columnIndex, columnPosition);
 		this.modelStackArray[columnIndex].push(newToken);
 		
-		if(Connect4Stack.getNbTokens() >= 7)
-		{
-			checkVictory(newToken);
+		if (Connect4Stack.getNbTokens() >= (this.view.getNbrRows() * this.view.getNbrColumns())) {
+			this.view.endGameWindow("Tie");
 		}
 		
-	}
+		boolean isWinner = checkVictory(newToken);
+		if ((isWinner) && newToken.getColor().contains("Blue")) {
+			this.view.endGameWindow("blueVictory");
+			}
+		else if ((isWinner) && newToken.getColor().contains("Red")) {
+			this.view.endGameWindow("redVictory");
+			}
+		}
 	
 	private boolean checkVictory(PlayedToken lastToken)
 	{
@@ -58,7 +64,7 @@ public class GameController
 		
 		boolean victoryAchieved = false;
 		
-		while(victoryAchieved == false)
+		while(victoryAchieved == false && counter < 5)
 		{
 			switch(counter)
 			{
@@ -91,6 +97,7 @@ public class GameController
 	
 	private boolean checkHorizontal(PlayedToken token)
 	{
+		
 		int goodTokensMax = this.view.getNbrSucessiveTokensToWin();
 		int goodTokens = 1;
 		String goodColor = "";
@@ -101,11 +108,13 @@ public class GameController
 		else
 			goodColor = "Blue";
 		
+		//Nous parcourons a gauche en premier, ensuite nous allons vers la droite.
 		if(token.getColumnIndex() != 0)
 		{
-			for(int i = 0; i < token.getColumnIndex(); i++)
+			for(int i = 1; i < token.getColumnIndex() + 1; i++)
 			{
-				if(this.modelStackArray[token.getColumnIndex() - i].peekAt(token.getColumnPosition()).getColor().contains(goodColor))
+				if(!this.modelStackArray[token.getColumnIndex() - i].checkPositionifEmpty(token.getColumnPosition()) && 
+						this.modelStackArray[token.getColumnIndex() - i].peekAt(token.getColumnPosition()).getColor().contains(goodColor))
 				{
 					if(goodTokens == goodTokensMax)
 					{
@@ -121,10 +130,12 @@ public class GameController
 		
 		if(goodTokens < goodTokensMax)
 		{
-			if(token.getColumnIndex() < this.view.getNbrColumns())
-			for(int i = 0; i < (goodTokensMax - goodTokens); i++)
+			int difference = ((this.view.getNbrColumns() - 1) - token.getColumnIndex());
+			
+			for(int i = 1; i < difference; i++)
 			{
-				if(this.modelStackArray[token.getColumnIndex() + i].peekAt(token.getColumnPosition()).getColor().contains(goodColor))
+				if(!this.modelStackArray[token.getColumnIndex() + i].checkPositionifEmpty(token.getColumnPosition()) && 
+						this.modelStackArray[token.getColumnIndex() + i].peekAt(token.getColumnPosition()).getColor().contains(goodColor))
 				{
 					if(goodTokens == goodTokensMax)
 					{
@@ -146,46 +157,158 @@ public class GameController
 	
 	private boolean checkVertical(PlayedToken token)
 	{
-		int goodTokens = 0;
+		
+		int goodTokensMax = this.view.getNbrSucessiveTokensToWin();
+		int goodTokens = 1;
 		String goodColor = "";
+		
 		if(token.getColor().contains("Red"))
 		{
-			goodColor = "red";
+			goodColor = "Red";
 		}
 		else
-			goodColor = "blue";
-		//victoryAchieved = checkDown(columnIndex, columnPosition+1);
-		return false;
+			goodColor = "Blue";
+		
+		int startPosition = token.getColumnPosition();
+		if (startPosition >= goodTokensMax - 2) {
+			for (int i = startPosition; i >= 1; i--) {
+				if (this.modelStackArray[token.getColumnIndex()].peekAt(i - 1).getColor().contains(goodColor)) {
+					goodTokens++;
+				}
+				else {
+					break;
+				}
+			}
+		}
+		else {
+			return false;
+		}
+		
+		if(goodTokens == 4)
+			return true;
+		else
+			return false;
 	}
 	
 	private boolean checkDiagonalUpToDown(PlayedToken token)
 	{
-		int goodTokens = 0;
+		int goodTokensMax = this.view.getNbrSucessiveTokensToWin();
+		int goodTokens = 1;
 		String goodColor = "";
 		if(token.getColor().contains("Red"))
 		{
-			goodColor = "red";
+			goodColor = "Red";
 		}
 		else
-			goodColor = "blue";
-		//victoryAchieved = checkUpLeft(columnIndex-1, columnPosition -1);
-		//victoryAchieved = checkDownRight(columnIndex +1, column Position +1);
-		return false;
+			goodColor = "Blue";
+		
+		//Nous allons en-haut a gauche en premier, ensuite en-bas a droite.
+		if(token.getColumnIndex() != 0 && token.getColumnPosition() != this.view.getNbrRows() - 1)
+		{
+			int difference = this.view.getNbrRows() - token.getColumnPosition();
+			for(int i = 1; i < difference; i++)
+			{
+				if(!this.modelStackArray[token.getColumnIndex() - i].checkPositionifEmpty(token.getColumnPosition() + i) && 
+						this.modelStackArray[token.getColumnIndex() - i].peekAt(token.getColumnPosition() + i).getColor().contains(goodColor))
+				{
+					if(goodTokens == goodTokensMax)
+					{
+						break;
+					}
+					else
+						goodTokens++;
+				}
+				else
+					break;
+			}
+		}
+		
+		if(goodTokens < goodTokensMax)
+		{
+			int difference = ((this.view.getNbrColumns() - 1) - token.getColumnIndex());
+			
+			for(int i = 1; i < difference; i++)
+			{
+				if(!this.modelStackArray[token.getColumnIndex() + i].checkPositionifEmpty(token.getColumnPosition() - i) && 
+						this.modelStackArray[token.getColumnIndex() + i].peekAt(token.getColumnPosition() - i).getColor().contains(goodColor))
+				{
+					if(goodTokens == goodTokensMax)
+					{
+						break;
+					}
+					else
+						goodTokens++;
+				}
+				else
+					break;
+			}
+		}
+		
+		if(goodTokens == 4)
+			return true;
+		else
+			return false;
 	}
 	
 	private boolean checkDiagonalDownToUp(PlayedToken token)
 	{
-		int goodTokens = 0;
+		int goodTokensMax = this.view.getNbrSucessiveTokensToWin();
+		int goodTokens = 1;
 		String goodColor = "";
 		if(token.getColor().contains("Red"))
 		{
-			goodColor = "red";
+			goodColor = "Red";
 		}
 		else
-			goodColor = "blue";
-		//victoryAchieved = checkUpRight(columnIndex+1, columnPosition -1);
-		//victoryAchieved = checkDownLeft(columnIndex-1, columnPosition + 1);
+			goodColor = "Blue";
 		
-		return true;
+		//Nous allons en-bas a gauche en premier, ensuite en-haut a droite.
+		if(token.getColumnIndex() != 0 && token.getColumnPosition() != 0)
+		{
+			for(int i = 1; i < token.getColumnIndex() + 1; i++)
+			{
+				if(!this.modelStackArray[token.getColumnIndex() - i].checkPositionifEmpty(token.getColumnPosition() - i) && 
+						this.modelStackArray[token.getColumnIndex() - i].peekAt(token.getColumnPosition() - i).getColor().contains(goodColor))
+				{
+					if(goodTokens == goodTokensMax)
+					{
+						break;
+					}
+					else
+						goodTokens++;
+				}
+				else
+					break;
+			}
+		}
+		
+		if(goodTokens < goodTokensMax)
+		{
+			if(token.getColumnPosition() != this.view.getNbrRows() - 1 && token.getColumnIndex() != this.view.getNbrColumns() - 1)
+			{
+				int difference = this.view.getNbrRows() - (this.view.getNbrRows() - token.getColumnPosition());
+				
+				for(int i = 1; i < difference; i++)
+				{
+					if(!this.modelStackArray[token.getColumnIndex() + i].checkPositionifEmpty(token.getColumnPosition() + i) && 
+							this.modelStackArray[token.getColumnIndex() + i].peekAt(token.getColumnPosition() + i).getColor().contains(goodColor))
+					{
+						if(goodTokens == goodTokensMax)
+						{
+							break;
+						}
+						else
+							goodTokens++;
+					}
+					else
+						break;
+				}
+			}
+		}
+		
+		if(goodTokens == 4)
+			return true;
+		else
+			return false;
 	}
 }
