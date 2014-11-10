@@ -21,8 +21,6 @@ import javax.swing.JTextField;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
-import model.PlayedToken;
-
 import controller.GameController;
 
 import observer.IObserver;
@@ -266,13 +264,13 @@ public class View extends JFrame implements IObserver
 	
 	public static void main(String[] args)
 	{
-		JUnitCore junit = new JUnitCore();
-		Result result1 = junit.run(Connect4StackTests.class);
-		Result result2 = junit.run(ControllerTests.class);
-		if (result1.getFailureCount() != 0 || result2.getFailureCount() != 0) {
-			System.out.println("Erreur dans les tests. Fin du programme.");
-			System.exit(1);
-		}
+//		JUnitCore junit = new JUnitCore();
+//		Result result1 = junit.run(Connect4StackTests.class);
+//		Result result2 = junit.run(ControllerTests.class);
+//		if (result1.getFailureCount() != 0 || result2.getFailureCount() != 0) {
+//			System.out.println("Erreur dans les tests. Fin du programme.");
+//			System.exit(1);
+//		}
 		
 		View view = new View();
 		
