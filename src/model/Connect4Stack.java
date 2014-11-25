@@ -4,28 +4,18 @@ import model.PlayedToken;
 
 public class Connect4Stack extends Subject
 {
-	private static int nbTokens;
+	
 	private int stackSize;
 	private final int stackCapacity;
 	private Node<PlayedToken> currentNode;
 	
 	public Connect4Stack(int capacity) 
 	{
-		Connect4Stack.nbTokens = 0;
 		this.stackSize = 0;
 		this.stackCapacity = capacity;
 		this.currentNode = null;
 	}
-	
-	public int getStackCapacity() 
-	{
-		return this.stackCapacity;
-	}
-	public static int getNbTokens()
-	{
-		return Connect4Stack.nbTokens;
-	}
-	
+
 	public boolean push(PlayedToken token) 
 	{
 		if (!this.isFull()) 
@@ -33,9 +23,7 @@ public class Connect4Stack extends Subject
 			Node<PlayedToken> oldNode = this.currentNode;
 			this.currentNode = new Node<PlayedToken>(token, oldNode);
 			this.stackSize++;
-			Connect4Stack.nbTokens++;
-			
-			this.notify(this.currentNode.element);
+		
 			return true;
 		}
 		return false;
@@ -48,7 +36,6 @@ public class Connect4Stack extends Subject
 			Node<PlayedToken> oldNode = this.currentNode;
 			this.currentNode = new Node<PlayedToken>(token, oldNode);
 			this.stackSize++;
-			Connect4Stack.nbTokens++;
 			return true;
 		}
 		return false;
@@ -112,7 +99,10 @@ public class Connect4Stack extends Subject
 		return peekedElement;
 	}
 
-	
+	public int getStackCapacity() 
+	{
+		return this.stackCapacity;
+	}
 //////////////////////////////////////////////////////////////////////	
 	private class Node<T> 
 	{

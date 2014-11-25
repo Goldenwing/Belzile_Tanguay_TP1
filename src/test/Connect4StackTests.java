@@ -54,15 +54,7 @@ public class Connect4StackTests {
 	@Test (expected = IndexOutOfBoundsException.class)
 	public void peekAtElementAtNonExistantPositionMustReturnNull() {
 		Connect4Stack stack = new Connect4Stack(3);
-		PlayedToken peekedElement = null;
-		PlayedToken token = new PlayedToken(0,0);
-		PlayedToken token2 = new PlayedToken(1,1);
-		PlayedToken token3 = new PlayedToken(2,2);
-		stack.pushTest(token);
-		stack.pushTest(token2);
-		stack.pushTest(token3);
-		
-		peekedElement = stack.peekAt(6);
+		stack.peekAt(6);
 	}
 	
 }
